@@ -171,7 +171,7 @@ narikiri/
 
 ## 配套工具
 
-- [`kukioyomu`](https://github.com/.../kukioyomu) — 反向技能：**读懂**别人话中的言外之意。narikiri 负责"写"，kukioyomu 负责"读"。
+- [`kukioyomu`](https://github.com/.../readTheRoomSkill) — 反向技能：**读懂**别人话中的言外之意。narikiri 负责"写"，kukioyomu 负责"读"。
 
 ---
 
