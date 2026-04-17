@@ -44,46 +44,52 @@
 
 ## 安装
 
-Skill 加载路径：`~/.claude/skills/<skill-name>/`（目录名即 skill 名）。
-
-### 方式一：软链（推荐，便于开发迭代）
+Claude Code 和 Codex CLI **使用同一份 SKILL.md 格式**（YAML frontmatter + `references/`），一次安装两端可用：
 
 ```bash
 git clone <this-repo> ~/code/narikiri
-ln -s ~/code/narikiri ~/.claude/skills/narikiri
+cd ~/code/narikiri
+./install.sh
 ```
 
-### 方式二：直接克隆到 skills 目录
+`install.sh` 把 repo 软链到两端的 skills 目录：
+
+- `~/.claude/skills/narikiri` → `<repo>`
+- `~/.codex/skills/narikiri` → `<repo>`
+
+之后改 SKILL.md 或 references，两端立即生效，无需重装。
+
+### 手动安装
 
 ```bash
-git clone <this-repo> ~/.claude/skills/narikiri
+ln -s ~/code/narikiri ~/.claude/skills/narikiri
+ln -s ~/code/narikiri ~/.codex/skills/narikiri
 ```
 
-### 验证安装
+### 验证
 
-打开一个**新的** Claude Code 会话，系统提示里应出现：
+新开 Claude Code 或 Codex 会话，自然语言触发即可（两端都靠 SKILL.md 的 `description` 字段自动发现）：
 
 ```
-- narikiri: narikiri
+把这段改成体制内汇报风："项目做完了，效果还行，但有几个坑。"
+```
+
+应输出：
+
+```
+【原意】...
+【风格：体制内汇报风】...
 ```
 
 ---
 
 ## 使用
 
-### 方式一：自然语言触发
+两端都支持自然语言触发，靠 SKILL.md 的 `description` 字段自动发现：
 
 ```
 把这段改成体制内汇报风：
 "项目做完了，效果还行，但有几个坑。"
-```
-
-Claude 会自动调用 `narikiri` 并按格式输出。
-
-### 方式二：显式调用
-
-```
-/narikiri
 ```
 
 ### 指定多个风格
@@ -140,7 +146,7 @@ Claude 会自动调用 `narikiri` 并按格式输出。
 
 ```
 narikiri/
-├── SKILL.md                         # 工作流 + 风格选择 + 输出格式
+├── SKILL.md                         # 工作流 + 风格选择 + 输出格式（两端共用入口）
 ├── references/                      # 按需加载的风格知识库
 │   ├── chinese-official.md          # 体制内、新闻联播、领导讲话
 │   ├── academic.md                  # 毕业答辩、论文、综述
@@ -149,6 +155,7 @@ narikiri/
 │   ├── literary.md                  # 鲁迅、文言、文艺、鸡汤
 │   ├── business.md                  # 商务邮件、律师函、客服
 │   └── japanese.md                  # 日语敬语、商务、学术
+├── install.sh                       # 同时软链到 ~/.claude/skills 和 ~/.codex/skills
 └── README.md                        # 本文件
 ```
 
